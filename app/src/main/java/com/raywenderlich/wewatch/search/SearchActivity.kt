@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.wewatch
+package com.raywenderlich.wewatch.search
 
 import android.app.Activity
 import android.content.Intent
@@ -43,6 +43,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.raywenderlich.wewatch.R
 import com.raywenderlich.wewatch.model.RemoteDataSource
 import com.raywenderlich.wewatch.model.TmdbResponse
 import io.reactivex.Observable
@@ -101,7 +102,10 @@ class SearchActivity : AppCompatActivity() {
     compositeDisposable.add(searchResultsDisposable)
   }
 
-  val searchResultsObservable: (String) -> Observable<TmdbResponse> = { query -> dataSource.searchResultsObservable(query) }
+  val searchResultsObservable:
+            (String) -> Observable<TmdbResponse> = {
+                query -> dataSource.searchResultsObservable(query)
+            }
 
   val observer: DisposableObserver<TmdbResponse>
     get() = object : DisposableObserver<TmdbResponse>() {

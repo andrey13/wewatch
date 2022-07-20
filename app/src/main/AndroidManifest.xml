@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="m">
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".main.MainActivity"
                   android:label="WeWatch"
                   android:theme="@style/AppTheme"
             android:exported="true">
@@ -26,11 +26,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AddMovieActivity"
+        <activity android:name=".add.AddMovieActivity"
                   android:label="Add Movie">
         </activity>
 
-        <activity android:name=".SearchActivity"
+        <activity android:name=".search.SearchActivity"
                   android:label="Search Results">
         </activity>
 

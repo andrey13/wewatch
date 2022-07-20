@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.wewatch
+package com.raywenderlich.wewatch.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -38,6 +38,7 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.raywenderlich.wewatch.R
 
 import com.raywenderlich.wewatch.model.Movie
 import com.raywenderlich.wewatch.network.RetrofitClient
@@ -45,12 +46,15 @@ import com.squareup.picasso.Picasso
 
 import java.util.HashSet
 
-class MainAdapter(internal var movieList: List<Movie>, internal var context: Context) : RecyclerView.Adapter<MainAdapter.MoviesHolder>() {
+class MainAdapter(internal var movieList: List<Movie>, internal var context: Context)
+  : RecyclerView.Adapter<MainAdapter.MoviesHolder>() {
   // HashMap to keep track of which items were selected for deletion
   val selectedMovies = HashSet<Movie>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesHolder {
-    val v = LayoutInflater.from(context).inflate(R.layout.item_movie_main, parent, false)
+    val v = LayoutInflater
+      .from(context)
+      .inflate(R.layout.item_movie_main, parent, false)
     return MoviesHolder(v)
   }
 
@@ -58,9 +62,12 @@ class MainAdapter(internal var movieList: List<Movie>, internal var context: Con
     holder.titleTextView.text = movieList[position].title
     holder.releaseDateTextView.text = movieList[position].releaseDate
     if (movieList[position].posterPath.equals("")) {
-      holder.movieImageView.setImageDrawable(context.getDrawable(R.drawable.ic_local_movies_gray))
+      holder.movieImageView
+        .setImageDrawable(context.getDrawable(R.drawable.ic_local_movies_gray))
     } else {
-      Picasso.get().load(RetrofitClient.TMDB_IMAGEURL + movieList[position].posterPath).into(holder.movieImageView)
+      Picasso.get()
+        .load(RetrofitClient.TMDB_IMAGEURL + movieList[position].posterPath)
+        .into(holder.movieImageView)
     }
   }
 

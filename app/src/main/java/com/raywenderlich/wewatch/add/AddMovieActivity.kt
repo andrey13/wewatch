@@ -28,21 +28,24 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.wewatch
+package com.raywenderlich.wewatch.add
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.raywenderlich.wewatch.R
 
 import com.raywenderlich.wewatch.model.Movie
 import com.raywenderlich.wewatch.model.LocalDataSource
 import com.raywenderlich.wewatch.network.RetrofitClient.TMDB_IMAGEURL
+import com.raywenderlich.wewatch.search.SearchActivity
 import com.squareup.picasso.Picasso
 
 open class AddMovieActivity : AppCompatActivity() {
@@ -50,6 +53,10 @@ open class AddMovieActivity : AppCompatActivity() {
   private lateinit var releaseDateEditText: EditText
   private lateinit var movieImageView: ImageView
   private lateinit var dataSource: LocalDataSource
+
+  init {
+    Log.i("AddMovieActivity------>", "init")
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -59,6 +66,7 @@ open class AddMovieActivity : AppCompatActivity() {
   }
 
   fun setupViews() {
+    Log.i("AddMovieActivity------>", "setupViews()")
     titleEditText = findViewById(R.id.movie_title)
     releaseDateEditText = findViewById(R.id.movie_release_date)
     movieImageView = findViewById(R.id.movie_imageview)
@@ -97,7 +105,9 @@ open class AddMovieActivity : AppCompatActivity() {
       titleEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_TITLE))
       releaseDateEditText.setText(data?.getStringExtra(SearchActivity.EXTRA_RELEASE_DATE))
       movieImageView.tag = data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH)
-      Picasso.get().load(TMDB_IMAGEURL + data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH)).into(movieImageView)
+      Picasso.get()
+        .load(TMDB_IMAGEURL + data?.getStringExtra(SearchActivity.EXTRA_POSTER_PATH))
+        .into(movieImageView)
     }
   }
 

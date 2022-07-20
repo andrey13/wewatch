@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.wewatch
+package com.raywenderlich.wewatch.search
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -37,14 +37,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.raywenderlich.wewatch.R
 import com.raywenderlich.wewatch.model.Movie
+import com.raywenderlich.wewatch.search.SearchActivity
 import com.squareup.picasso.Picasso
 
 
-class SearchAdapter(var movieList: List<Movie>, var context: Context, var listener: SearchActivity.RecyclerItemListener) : RecyclerView.Adapter<SearchAdapter.SearchMoviesHolder>() {
+class SearchAdapter(
+  var movieList: List<Movie>,
+  var context: Context,
+  var listener: SearchActivity.RecyclerItemListener)
+  : RecyclerView.Adapter<SearchAdapter.SearchMoviesHolder>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchMoviesHolder {
-    val view = LayoutInflater.from(context).inflate(R.layout.item_movie_details, parent, false)
+    val view = LayoutInflater.from(context)
+      .inflate(R.layout.item_movie_details, parent, false)
 
     val viewHolder = SearchMoviesHolder(view)
     view.setOnClickListener { v -> listener.onItemClick(v, viewHolder.adapterPosition) }
@@ -58,7 +65,9 @@ class SearchAdapter(var movieList: List<Movie>, var context: Context, var listen
     holder.overviewTextView.text = movieList[position].overview
 
     if (movieList[position].posterPath != null) {
-      Picasso.get().load("https://image.tmdb.org/t/p/w500/" + movieList[position].posterPath).into(holder.movieImageView)
+      Picasso.get()
+        .load("https://image.tmdb.org/t/p/w500/" + movieList[position].posterPath)
+        .into(holder.movieImageView)
     }
   }
 
