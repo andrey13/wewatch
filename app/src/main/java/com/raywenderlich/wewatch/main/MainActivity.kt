@@ -55,19 +55,17 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
   private lateinit var adapter: MainAdapter
   private lateinit var fab: FloatingActionButton
   private lateinit var noMoviesLayout: LinearLayout
-  private lateinit var mainPresenter: MainContract.PresenterInterface
+
+  private val mainPresenter: MainContract.PresenterInterface by lazy {
+    val dataSource = LocalDataSource(application)
+    MainPresenter(viewInterface = this, dataSource = dataSource)
+  }
 
   //--------------- AppCompatActivity Life Events ---------------------------------------
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    setupPresenter()
     setupViews()
-  }
-
-  private fun setupPresenter() {
-    val dataSource = LocalDataSource(application)
-    mainPresenter = MainPresenter(viewInterface = this, dataSource = dataSource)
   }
 
   private fun setupViews() {
