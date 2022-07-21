@@ -11,5 +11,4 @@ class AddMovieContract {
     interface PresenterInterface {
         fun addMovie(title: String, releaseDate: String, posterPath: String)
     }
-
 }

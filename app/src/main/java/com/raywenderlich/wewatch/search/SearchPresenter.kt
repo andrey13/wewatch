@@ -9,7 +9,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-
 class SearchPresenter(
 
     private var viewInterface: SearchContract.ViewInterface,
@@ -20,9 +19,9 @@ class SearchPresenter(
     private val compositeDisposable = CompositeDisposable()
 
     val searchResultsObservable:
-                (String) -> Observable<TmdbResponse> = {
-                        query -> dataSource.searchResultsObservable(query)
-                }
+        (String) -> Observable<TmdbResponse> = {
+             query -> dataSource.searchResultsObservable(query)
+        }
 
     val observer: DisposableObserver<TmdbResponse>
         get() = object : DisposableObserver<TmdbResponse>() {

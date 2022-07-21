@@ -48,12 +48,14 @@ import com.raywenderlich.wewatch.model.TmdbResponse
 
 class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
 
-  private val TAG = "SearchActivity"
-  private val searchResultsRecyclerView: RecyclerView by lazy { findViewById(R.id.search_results_recyclerview) }
   private val noMoviesTextView: TextView by lazy { findViewById(R.id.no_movies_textview) }
   private val progressBar: ProgressBar by lazy { findViewById(R.id.progress_bar) }
   private lateinit var adapter: SearchAdapter
   private lateinit var query: String
+
+  private val searchResultsRecyclerView: RecyclerView by lazy {
+    findViewById(R.id.search_results_recyclerview)
+  }
 
   private val searchPresenter: SearchPresenter by lazy {
     val dataSource = RemoteDataSource()
@@ -85,7 +87,6 @@ class SearchActivity : AppCompatActivity(), SearchContract.ViewInterface {
     super.onStop()
     searchPresenter.stop()
   }
-
 
   //begin---------- Implementation of ViewInterface -------------------------------------
   override fun displayResult(tmdbResponse: TmdbResponse) {

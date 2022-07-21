@@ -25,7 +25,11 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        dataBinding true
+    }
 }
+
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -34,8 +38,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'junit:junit:4.12'
-    implementation 'junit:junit:4.12'
+    implementation 'junit:junit:4.13.2'
 
     //Testing
     testImplementation 'junit:junit:4.13.2'
@@ -75,7 +78,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2+'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.android.material:material:1.7.0-alpha02'
+    implementation 'com.google.android.material:material:1.7.0-alpha03'
 
 
 }

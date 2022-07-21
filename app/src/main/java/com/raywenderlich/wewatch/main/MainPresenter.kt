@@ -11,10 +11,8 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 class MainPresenter(
-
     private var viewInterface: MainContract.ViewInterface,
     private var dataSource: LocalDataSource
-
     ): MainContract.PresenterInterface {
 
     private val compositeDisposable = CompositeDisposable()

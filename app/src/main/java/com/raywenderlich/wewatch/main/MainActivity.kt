@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     mainPresenter.stop()
   }
 
-
   //--------------- Implementation of ViewInterface -------------------------------------
   override fun displayMovies(movieList: List<Movie>) {
     adapter.movieList = movieList
@@ -120,7 +119,6 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
   }
 
-
   //--------------- fab onClick ------------ start AddMovieActivity ---------------------
   fun goToAddMovieActivity(v: View) {
     val myIntent = Intent(this@MainActivity, AddMovieActivity::class.java)
@@ -136,10 +134,7 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
     }
   }
 
-
   companion object {
     const val ADD_MOVIE_ACTIVITY_REQUEST_CODE = 1
   }
-
-
 }
