@@ -51,10 +51,10 @@ import com.raywenderlich.wewatch.model.Movie
 
 class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
 
-  private lateinit var moviesRecyclerView: RecyclerView
-  private lateinit var adapter: MainAdapter
-  private lateinit var fab: FloatingActionButton
-  private lateinit var noMoviesLayout: LinearLayout
+  private val moviesRecyclerView: RecyclerView by lazy { findViewById(R.id.movies_recyclerview) }
+  private val adapter: MainAdapter by lazy { MainAdapter(arrayListOf(), this@MainActivity) }
+  private val fab: FloatingActionButton by lazy { findViewById(R.id.fab) }
+  private val noMoviesLayout: LinearLayout by lazy { findViewById(R.id.no_movies_layout) }
 
   private val mainPresenter: MainContract.PresenterInterface by lazy {
     val dataSource = LocalDataSource(application)
@@ -69,12 +69,8 @@ class MainActivity : AppCompatActivity(), MainContract.ViewInterface {
   }
 
   private fun setupViews() {
-    moviesRecyclerView = findViewById(R.id.movies_recyclerview)
     moviesRecyclerView.layoutManager = LinearLayoutManager(this)
-    adapter = MainAdapter(arrayListOf(), this@MainActivity)
     moviesRecyclerView.adapter = adapter
-    fab = findViewById(R.id.fab)
-    noMoviesLayout = findViewById(R.id.no_movies_layout)
     supportActionBar?.title = "Movies to Watch"
   }
 

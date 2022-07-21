@@ -33,46 +33,35 @@ package com.raywenderlich.wewatch.add
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.wewatch.R
-
-import com.raywenderlich.wewatch.model.Movie
 import com.raywenderlich.wewatch.model.LocalDataSource
 import com.raywenderlich.wewatch.network.RetrofitClient.TMDB_IMAGEURL
 import com.raywenderlich.wewatch.search.SearchActivity
 import com.squareup.picasso.Picasso
 
-open class AddMovieActivity : AppCompatActivity() {
-  private lateinit var titleEditText: EditText
-  private lateinit var releaseDateEditText: EditText
-  private lateinit var movieImageView: ImageView
-  private lateinit var dataSource: LocalDataSource
+open class AddMovieActivity : AppCompatActivity(), AddMovieContract.ViewInterface {
+  private val titleEditText: EditText by lazy { findViewById(R.id.movie_title) }
+  private val releaseDateEditText: EditText by lazy { findViewById(R.id.movie_release_date) }
+  private val movieImageView: ImageView by lazy { findViewById(R.id.movie_imageview) }
 
-  init {
-    Log.i("AddMovieActivity------>", "init")
+  private val addMoviePresenter: AddMoviePresenter by lazy {
+    val dataSource = LocalDataSource(application)
+    AddMoviePresenter(this, dataSource)
   }
 
+
+  //--------------- AddMovieActivity Life Events ---------------------------------------
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_add_movie)
-    setupViews()
-    dataSource = LocalDataSource(application)
   }
 
-  fun setupViews() {
-    Log.i("AddMovieActivity------>", "setupViews()")
-    titleEditText = findViewById(R.id.movie_title)
-    releaseDateEditText = findViewById(R.id.movie_release_date)
-    movieImageView = findViewById(R.id.movie_imageview)
-  }
-
-  //search onClick
+  //--------------- onClick -------------------------------------------------------------
   fun goToSearchMovieActivity(v: View) {
     val title = titleEditText.text.toString()
     val intent = Intent(this@AddMovieActivity, SearchActivity::class.java)
@@ -80,22 +69,13 @@ open class AddMovieActivity : AppCompatActivity() {
     startActivityForResult(intent, SEARCH_MOVIE_ACTIVITY_REQUEST_CODE)
   }
 
-  //addMovie onClick
-  fun onClickAddMovie(v: View) {
 
-    if (TextUtils.isEmpty(titleEditText.text)) {
-      showToast("Movie title cannot be empty")
-    } else {
+  //--------------- addMovie onClick ----------------------------------------------------
+  fun onClickAddMovie(v: View) {
       val title = titleEditText.text.toString()
       val releaseDate = releaseDateEditText.text.toString()
       val posterPath = if (movieImageView.tag != null) movieImageView.tag.toString() else ""
-
-      val movie = Movie(title = title, releaseDate = releaseDate, posterPath = posterPath)
-      dataSource.insert(movie)
-
-      setResult(Activity.RESULT_OK)
-      finish()
-    }
+      addMoviePresenter.addMovie(title, releaseDate, posterPath)
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,9 +91,21 @@ open class AddMovieActivity : AppCompatActivity() {
     }
   }
 
-  fun showToast(string: String) {
-    Toast.makeText(this@AddMovieActivity, string, Toast.LENGTH_LONG).show()
+
+  //--------------- Implementation of ViewInterface -------------------------------------
+  override fun returnToMain() {
+    setResult(Activity.RESULT_OK)
+    finish()
   }
+
+  override fun displayMessage(message: String) {
+    Toast.makeText(this@AddMovieActivity, message, Toast.LENGTH_LONG).show()
+  }
+
+  override fun displayError(message: String) {
+    displayMessage(message)
+  }
+
 
   companion object {
     const val SEARCH_MOVIE_ACTIVITY_REQUEST_CODE = 2
